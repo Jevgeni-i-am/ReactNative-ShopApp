@@ -1,4 +1,5 @@
 //here will be defined how a product should look like
+// MODELS+STORE/Actions+STORE/Reducers  works TOGETHER!!!!
 
 class Product {
     constructor(id,ownerId,title,imageUrl, description, price){

@@ -1,11 +1,15 @@
 
 import React from 'react';
-import { FlatList } from 'react-native';
-import { useSelector } from 'react-redux';
-import ProductItem from '../../components/shop/Productitem';
+import { FlatList, Platform } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import ProductItem from '../../components/shop/ProductItem';
+import * as cartActions from '../../store/actions/cart'
+import CustomHeaderButton from "../../components/UI/CustomHeaderButton";
 
 const ProductsOverviewScreen = props => {
     const products = useSelector(state => state.products.availableProducts)
+    const dispatch = useDispatch()
     return (
         <FlatList
             data={products}
@@ -14,18 +18,34 @@ const ProductsOverviewScreen = props => {
                 image={itemData.item.imageUrl}
                 title={itemData.item.title}
                 price={itemData.item.price}
-                onViewDetail={() => { }}
-                onAddToCard={() => { }}
+                onViewDetail={() => {
+                    props.navigation.navigate('ProductDetail', {
+                        productId: itemData.item.id,
+                        productTitle: itemData.item.title
+                    })
+                }}
+                onAddToCard={() => { dispatch(cartActions.addToCart(itemData.item)) }}
             />
-
             }
         />
     );
 }
 
-ProductsOverviewScreen.navigationOptions = {
-    headerTitle: "All products"
-}
+ProductsOverviewScreen.navigationOptions = navData => {
+    return {
+        headerTitle: 'All Products',
+        headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                    title="Cart"
+                    iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+                    onPress={() => {
+                        navData.navigation.navigate('Cart');
+                    }} />
+            </HeaderButtons>
+        )
+    };
+};
 
 
 export default ProductsOverviewScreen
