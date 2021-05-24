@@ -10,13 +10,17 @@ import { enableScreens } from 'react-native-screens';
 // composeWithDevTools SHOULD REMOVE BEFORE DEPLOY APP
 // import { composeWithDevTools } from 'redux-devtools-extension';
 import cartReducer from './store/reducers/cart'
+import ordersReducer from './store/reducers/order'
+
 
 const rootReducer = combineReducers({
   products: productsReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  orders: ordersReducer,
+  
 })
 
-const store = createStore(rootReducer, /*composeWithDevTools()*/ )
+const store = createStore(rootReducer, /*composeWithDevTools()*/)
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false)
