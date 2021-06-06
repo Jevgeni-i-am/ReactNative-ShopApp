@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import ShopNavigation from './navigation/ShopNavigation';
 import productsReducer from './store/reducers/products'
 import { fetchFonts } from "./assets/fonts/FetchFonts";
 import AppLoading from 'expo-app-loading';
-import { enableScreens } from 'react-native-screens';
 //that's the function to pass to create store as a second argument.
 // composeWithDevTools SHOULD REMOVE BEFORE DEPLOY APP
 // import { composeWithDevTools } from 'redux-devtools-extension';
 import cartReducer from './store/reducers/cart'
 import ordersReducer from './store/reducers/order'
-
+import ReduxThunk from 'redux-thunk'
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -20,7 +19,7 @@ const rootReducer = combineReducers({
   
 })
 
-const store = createStore(rootReducer, /*composeWithDevTools()*/)
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk)/*composeWithDevTools()*/)
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false)
