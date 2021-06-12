@@ -10,3 +10,9 @@
                     />
                 )}
             />
+
+?auth=${token}
+
+            jevgeni.liski@gmail.com             test1
+            dev.jedroid@gmail.com               testtest
+            test@test.com                       testtestest
